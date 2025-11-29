@@ -27,7 +27,7 @@ async def handle_user_message(message: Message, bot: Bot):
     try:
         lang = await user_service.get_user_language(message.from_user.id)
         forwarded_msg = await message.forward(chat_id=config.SUPPORT_GROUP_ID)
-        await message.answer(t("start.greeting", lang))
+        await message.answer(t("start.common.message", lang))
         
         # Save link to DB
         async with async_session_maker() as session:
@@ -41,4 +41,4 @@ async def handle_user_message(message: Message, bot: Bot):
             
     except Exception as e:
         print(f"Error forwarding message: {e}")
-        await message.answer("Произошла ошибка при отправке сообщения. Попробуйте позже.")
+        await message.answer("Error.")
