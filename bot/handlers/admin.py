@@ -3,7 +3,7 @@ from aiogram.types import Message
 from sqlalchemy import select
 
 from bot.config import config
-from bot.database.models import MessageLink
+from bot.models.models import MessageLink
 from bot.database.core import async_session_maker
 
 router = Router()

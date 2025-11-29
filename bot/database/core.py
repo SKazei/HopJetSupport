@@ -1,10 +1,8 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from bot.config import config
-from bot.database.models import Base
+from bot.models.models import Base
 
-DATABASE_URL = f"sqlite+aiosqlite:///{config.DB_NAME}"
-
-engine = create_async_engine(DATABASE_URL, echo=False)
+engine = create_async_engine(config.DATABASE_URL, echo=False)
 async_session_maker = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
 async def init_db():

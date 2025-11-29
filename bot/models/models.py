@@ -1,9 +1,7 @@
 from datetime import datetime
 from sqlalchemy import BigInteger, Integer, DateTime
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-
-class Base(DeclarativeBase):
-    pass
+from bot.models.base import Base
 
 class MessageLink(Base):
     __tablename__ = "message_links"

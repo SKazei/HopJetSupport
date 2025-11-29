@@ -1,6 +1,6 @@
 import asyncio
 from bot.database.core import init_db, engine
-from bot.database.models import MessageLink
+from bot.models.models import MessageLink
 from sqlalchemy import select
 from bot.database.core import async_session_maker
 

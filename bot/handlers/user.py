@@ -1,27 +1,33 @@
 from aiogram import Router, F, Bot
 from aiogram.types import Message
 from aiogram.filters import CommandStart
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
 
 from bot.config import config
-from bot.database.models import MessageLink
+from bot.models.models import MessageLink
 from bot.database.core import async_session_maker
+from bot.i18n import t
+from bot.services.UserService import UserService
 
 router = Router()
+user_service = UserService()
 
 @router.message(CommandStart())
 async def cmd_start(message: Message):
-    await message.answer(
-        "Привет! Это поддержка HopJet.\n\n"
-        "Напиши свой вопрос или расскажи, что не так, и мы ответим как можно скорее."
-    )
+    try:
+        user = await user_service.get_current_user(message.from_user.id)
+        lang = user_service.get_user_preferred_language(user, message.from_user)
+        await message.answer(t("start.greeting", lang))
+    except Exception as e:
+        print(e)
+
 
 @router.message(F.chat.type == "private")
 async def handle_user_message(message: Message, bot: Bot):
     # Forward message to support group
     try:
+        lang = await user_service.get_user_language(message.from_user.id)
         forwarded_msg = await message.forward(chat_id=config.SUPPORT_GROUP_ID)
+        await message.answer(t("start.greeting", lang))
         
         # Save link to DB
         async with async_session_maker() as session:
