@@ -1,0 +1,5 @@
+aiogram>=3.0
+sqlalchemy[asyncio]
+aiosqlite
+pydantic-settings
+python-dotenv
