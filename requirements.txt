@@ -1,5 +1,6 @@
 aiogram>=3.0
 sqlalchemy[asyncio]
 aiosqlite
+asyncpg
 pydantic-settings
 python-dotenv
